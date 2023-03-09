@@ -48,8 +48,8 @@ public class CocaAgent {
         //adopt for jdk11+
         //using unsafe injection with bootstrap classloader
         Map<String, byte[]> classesTypeMap = new HashMap<>();
-        classesTypeMap.put(new TypeDescription.ForLoadedType(MyInterceptor.class).getName(),
-                ClassFileLocator.ForClassLoader.read(MyInterceptor.class));
+        classesTypeMap.put(new TypeDescription.ForLoadedType(DelegateTemplate.class).getName(),
+                ClassFileLocator.ForClassLoader.read(DelegateTemplate.class));
         ClassInjector.UsingUnsafe.Factory factory = ClassInjector.UsingUnsafe.Factory.resolve(instrumentation);
         factory.make(null, null).injectRaw(classesTypeMap);
         new AgentBuilder.Default()
@@ -60,15 +60,5 @@ public class CocaAgent {
                         builder.method(ElementMatchers.named("report"))
                                 .intercept(MethodDelegation.to(new DelegateTemplate(new SimpleInstanceInterceptor()))))
                 .installOn(instrumentation);
-    }
-
-    public static class MyInterceptor {
-        @RuntimeType
-        public static String intercept(@AllArguments Object[] allArguments,
-                                @Origin Method method, @SuperCall Callable<String> callable) throws Exception {
-            // intercept any method of any signature
-            System.out.println("intercept");
-            return callable.call();
-        }
     }
 }
