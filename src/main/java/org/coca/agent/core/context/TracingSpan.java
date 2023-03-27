@@ -1,20 +1,25 @@
 package org.coca.agent.core.context;
 
-import java.util.UUID;
+import org.coca.agent.core.util.KeyValuePair;
+import org.coca.agent.core.util.TagValuePair;
 
-public class TracingSpan {
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+public class TracingSpan implements Span{
     private final String traceId;
-    private final String spanId;
+    private final int spanId;
     private final String parentSpanId;
     private String operationName;
-    private final long startTime;
+    private long startTime;
     private long endTime;
+    protected boolean errorOccurred = false;
+    protected List<TagValuePair> tags;
+    protected List<SpanLogData> logs;
 
-    public TracingSpan(String operationName) {
-        this(operationName, UUID.randomUUID().toString(), UUID.randomUUID().toString(), null, System.currentTimeMillis());
-    }
-
-    public TracingSpan(String operationName, String traceId, String spanId, String parentSpanId, long startTime) {
+    public TracingSpan(String operationName, String traceId, int spanId, String parentSpanId, long startTime) {
         this.operationName = operationName;
         this.traceId = traceId;
         this.spanId = spanId;
@@ -25,6 +30,106 @@ public class TracingSpan {
     public void finish() {
         endTime = System.currentTimeMillis();
         long duration = endTime - startTime;
-        System.out.println("SpanTracing finished for operation " + operationName + " with duration " + duration + "ms.");
+    }
+
+    public String getTraceId() {
+        return traceId;
+    }
+
+    @Override
+    public boolean isEntry() {
+        return false;
+    }
+
+    @Override
+    public boolean isExit() {
+        return false;
+    }
+
+    @Override
+    public boolean start() {
+        return false;
+    }
+
+    @Override
+    public Span start(long startTime) {
+        this.startTime = startTime;
+        return this;
+    }
+
+    @Override
+    public int getSpanId() {
+        return spanId;
+    }
+
+    public String getParentSpanId() {
+        return parentSpanId;
+    }
+
+    @Override
+    public String getOperationName() {
+        return operationName;
+    }
+
+    @Override
+    public Span setOperationName(String operationName) {
+        this.operationName = operationName;
+        return this;
+    }
+
+    @Override
+    public Span tag(SpanTag tag, String value) {
+        if (tags == null) {
+            tags = new ArrayList<>();
+        }
+        tags.add(new TagValuePair(tag, value));
+        return this;
+    }
+
+    @Override
+    public Span log(Throwable t) {
+        if (logs == null) {
+            logs = new LinkedList<>();
+        }
+        if (!errorOccurred) {
+            errorOccurred();
+        }
+        logs.add(new SpanLogData.Builder().add(new KeyValuePair("event", "error"))
+                .add(new KeyValuePair("error.kind", t.getClass().getName()))
+                .add(new KeyValuePair("message", t.getMessage()))
+                .build(System.currentTimeMillis()));
+        return this;
+    }
+
+
+    @Override
+    public Span log(long timestampMicroseconds, Map<String, ?> fields) {
+        if (logs == null) {
+            logs = new LinkedList<>();
+        }
+        SpanLogData.Builder builder = new SpanLogData.Builder();
+        for (Map.Entry<String, ?> entry : fields.entrySet()) {
+            builder.add(new KeyValuePair(entry.getKey(), entry.getValue().toString()));
+        }
+        logs.add(builder.build(timestampMicroseconds));
+        return this;
+    }
+
+    @Override
+    public Span errorOccurred() {
+        this.errorOccurred = true;
+        return this;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 }
