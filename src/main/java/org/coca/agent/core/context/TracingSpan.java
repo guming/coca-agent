@@ -8,28 +8,29 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class TracingSpan implements Span{
+public class TracingSpan implements Span {
     private final String traceId;
     private final int spanId;
     private final String parentSpanId;
-    private String operationName;
-    private long startTime;
-    private long endTime;
+    protected String operationName;
+    protected long startTime;
+    protected long endTime;
     protected boolean errorOccurred = false;
     protected List<TagValuePair> tags;
     protected List<SpanLogData> logs;
+    protected TracingContext tracingContext;
 
-    public TracingSpan(String operationName, String traceId, int spanId, String parentSpanId, long startTime) {
+    public TracingSpan(String operationName, String traceId, int spanId, String parentSpanId, TracingContext tracingContext) {
         this.operationName = operationName;
         this.traceId = traceId;
         this.spanId = spanId;
         this.parentSpanId = parentSpanId;
-        this.startTime = startTime;
+        this.tracingContext = tracingContext;
     }
 
-    public void finish() {
+    public void finish(TraceList traceList) {
         endTime = System.currentTimeMillis();
-        long duration = endTime - startTime;
+
     }
 
     public String getTraceId() {
