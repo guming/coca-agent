@@ -9,8 +9,8 @@ public class TracingContextCarrier implements Serializable {
     private String traceId;
     private String traceListId;
     private int spanId=-1;
-    private String parentService="";
-    private String parentInstance="";
+    private String parentService = "";
+    private String parentInstance = "";
     private String parentEndpoint;
 
     public String getTraceId() {

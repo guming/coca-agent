@@ -1,6 +1,7 @@
 package org.coca.agent.core.context;
 
-import org.coca.agent.core.util.StringUtil;
+import org.coca.agent.core.context.trace.TraceList;
+import org.coca.agent.core.context.trace.TracingSpan;
 
 import java.util.LinkedList;
 

@@ -1,8 +1,10 @@
-package org.coca.agent.core.context;
+package org.coca.agent.core.context.trace;
 
-public class StackBasedTracingSpan extends TracingSpan{
-    private int stackDepth;
-    private String peer;
+import org.coca.agent.core.context.TracingContext;
+
+public class StackBasedTracingSpan extends TracingSpan {
+    protected int stackDepth;
+    protected String peer;
 
     public StackBasedTracingSpan(String operationName, String traceId, int spanId, String parentSpanId,
                                  TracingContext tracingContext) {
@@ -30,8 +32,9 @@ public class StackBasedTracingSpan extends TracingSpan{
         return peer;
     }
 
-    public void setPeer(String peer) {
+    public Span setPeer(String peer) {
         this.peer = peer;
+        return this;
     }
 
     @Override

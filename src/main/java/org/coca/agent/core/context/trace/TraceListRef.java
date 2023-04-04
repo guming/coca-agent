@@ -1,4 +1,4 @@
-package org.coca.agent.core.context;
+package org.coca.agent.core.context.trace;
 
 public class TraceListRef {
     private String traceId;

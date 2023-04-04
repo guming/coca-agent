@@ -1,5 +1,6 @@
-package org.coca.agent.core.context;
+package org.coca.agent.core.context.trace;
 
+import org.coca.agent.core.context.*;
 import org.coca.agent.core.util.KeyValuePair;
 import org.coca.agent.core.util.TagValuePair;
 
@@ -8,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class TracingSpan implements Span {
+public abstract class TracingSpan implements Span {
     private final String traceId;
     private final int spanId;
     private final String parentSpanId;
@@ -46,15 +47,9 @@ public class TracingSpan implements Span {
     public boolean isExit() {
         return false;
     }
-
     @Override
-    public boolean start() {
-        return false;
-    }
-
-    @Override
-    public Span start(long startTime) {
-        this.startTime = startTime;
+    public Span start() {
+        this.startTime = System.currentTimeMillis();
         return this;
     }
 
@@ -77,7 +72,10 @@ public class TracingSpan implements Span {
         this.operationName = operationName;
         return this;
     }
-
+    @Override
+    public Span tag(String key, String value) {
+        return tag(Tags.ofKey(key), value);
+    }
     @Override
     public Span tag(SpanTag tag, String value) {
         if (tags == null) {
