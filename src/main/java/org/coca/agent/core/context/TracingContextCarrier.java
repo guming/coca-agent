@@ -12,6 +12,7 @@ public class TracingContextCarrier implements Serializable {
     private String parentService = "";
     private String parentInstance = "";
     private String parentEndpoint;
+    private String addressUsedAtClient;
 
     public String getTraceId() {
         return traceId;
@@ -61,6 +62,14 @@ public class TracingContextCarrier implements Serializable {
         this.parentEndpoint = parentEndpoint;
     }
 
+    public String getAddressUsedAtClient() {
+        return addressUsedAtClient;
+    }
+
+    public void setAddressUsedAtClient(String addressUsedAtClient) {
+        this.addressUsedAtClient = addressUsedAtClient;
+    }
+
     public CarrierItem items() {
         return new CarrierItemHead(new CarrierItem("", "", null));
     }
@@ -73,7 +82,8 @@ public class TracingContextCarrier implements Serializable {
                 this.getSpanId() + "",
                 Base64.encode(this.getParentService()),
                 Base64.encode(this.getParentInstance()),
-                Base64.encode(this.getParentEndpoint())
+                Base64.encode(this.getParentEndpoint()),
+                Base64.encode(this.getAddressUsedAtClient())
         );
     }
     public TracingContextCarrier deserialize(String text) {
@@ -90,6 +100,7 @@ public class TracingContextCarrier implements Serializable {
                 this.parentService = Base64.decode2UTFString(parts[4]);
                 this.parentInstance = Base64.decode2UTFString(parts[5]);
                 this.parentEndpoint = Base64.decode2UTFString(parts[6]);
+                this.addressUsedAtClient = Base64.decode2UTFString(parts[7]);
             } catch (IllegalArgumentException ignored) {
 
             }

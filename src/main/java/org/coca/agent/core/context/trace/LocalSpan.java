@@ -4,8 +4,8 @@ import org.coca.agent.core.context.TracingContext;
 
 public class LocalSpan extends TracingSpan {
 
-    public LocalSpan(String operationName, String traceId, int spanId, String parentSpanId, TracingContext tracingContext) {
-        super(operationName, traceId, spanId, parentSpanId, tracingContext);
+    public LocalSpan(String operationName, int spanId, int parentSpanId, TracingContext tracingContext) {
+        super(operationName, spanId, parentSpanId, tracingContext);
     }
 
     @Override

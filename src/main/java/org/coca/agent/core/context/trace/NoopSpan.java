@@ -56,6 +56,16 @@ public class NoopSpan implements Span {
     }
 
     @Override
+    public Span setPeer(String remotePeer) {
+        return this;
+    }
+
+    @Override
+    public void ref(TraceListRef ref) {
+
+    }
+
+    @Override
     public Span tag(String key, String value) {
         return this;
     }

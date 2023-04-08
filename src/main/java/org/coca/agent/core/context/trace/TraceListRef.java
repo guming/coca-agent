@@ -1,5 +1,8 @@
 package org.coca.agent.core.context.trace;
 
+import org.coca.agent.core.context.ContextSnapshot;
+import org.coca.agent.core.context.TracingContextCarrier;
+
 public class TraceListRef {
     private String traceId;
     private int spanId;
@@ -8,6 +11,7 @@ public class TraceListRef {
     private String parentInstance;
     private String parentEndpoint;
     private TraceListRefType type;
+    private String addressUsedAtClient;
 
     public TraceListRefType getType() {
         return type;
@@ -39,4 +43,25 @@ public class TraceListRef {
     public enum TraceListRefType {
         CROSS_PROCESS, CROSS_THREAD
     }
+
+    public TraceListRef(TracingContextCarrier carrier) {
+        this.type = TraceListRefType.CROSS_PROCESS;
+        this.traceId = carrier.getTraceId();
+        this.traceListId = carrier.getTraceListId();
+        this.spanId = carrier.getSpanId();
+        this.parentService = carrier.getParentService();
+        this.parentInstance = carrier.getParentInstance();
+        this.parentEndpoint = carrier.getParentEndpoint();
+        this.addressUsedAtClient = carrier.getAddressUsedAtClient();
+    }
+    public TraceListRef(ContextSnapshot snapshot) {
+        this.type = TraceListRefType.CROSS_PROCESS;
+        this.traceId = snapshot.getTraceId();
+        this.traceListId = snapshot.getTraceListId();
+        this.spanId = snapshot.getSpanId();
+        this.parentService = "";
+        this.parentInstance = "";
+        this.parentEndpoint = snapshot.getParentEndpoint();
+    }
+
 }

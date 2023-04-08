@@ -5,8 +5,8 @@ import org.coca.agent.core.context.TracingContext;
 public class EntrySpan extends StackBasedTracingSpan {
     private int currentMaxDepth;
 
-    public EntrySpan(String operationName, String traceId, int spanId, String parentSpanId, TracingContext tracingContext) {
-        super(operationName, traceId, spanId, parentSpanId, tracingContext);
+    public EntrySpan(String operationName, int spanId, int parentSpanId, TracingContext tracingContext) {
+        super(operationName, spanId, parentSpanId, tracingContext);
         this.currentMaxDepth = 0;
     }
 

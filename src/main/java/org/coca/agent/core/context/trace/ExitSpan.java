@@ -4,12 +4,12 @@ import org.coca.agent.core.context.TracingContext;
 import org.coca.agent.core.context.TracingContextCarrier;
 
 public class ExitSpan extends StackBasedTracingSpan implements ExitTypeSpan {
-    public ExitSpan(String operationName, String traceId, int spanId, String parentSpanId, TracingContext tracingContext) {
-        super(operationName, traceId, spanId, parentSpanId, tracingContext);
+    public ExitSpan(String operationName, int spanId, int parentSpanId, TracingContext tracingContext) {
+        super(operationName, spanId, parentSpanId, tracingContext);
     }
 
-    public ExitSpan(String operationName, String traceId, int spanId, String parentSpanId, TracingContext tracingContext, String peer) {
-        super(operationName, traceId, spanId, parentSpanId, tracingContext, peer);
+    public ExitSpan(String operationName, int spanId, int parentSpanId, TracingContext tracingContext, String peer) {
+        super(operationName, spanId, parentSpanId, tracingContext, peer);
     }
     public ExitSpan start() {
         if (++stackDepth == 1) {

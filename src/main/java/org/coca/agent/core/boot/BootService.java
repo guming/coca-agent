@@ -6,8 +6,7 @@ public interface BootService {
     void startup() throws Throwable;
     void onComplete() throws Throwable;
     void shudown() throws Throwable;
-    default int poritity() {
-
+    default int priority() {
         return 0;
     }
 }

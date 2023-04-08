@@ -10,9 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class TracingSpan implements Span {
-    private final String traceId;
     private final int spanId;
-    private final String parentSpanId;
+    private final int parentSpanId;
     protected String operationName;
     protected long startTime;
     protected long endTime;
@@ -20,23 +19,22 @@ public abstract class TracingSpan implements Span {
     protected List<TagValuePair> tags;
     protected List<SpanLogData> logs;
     protected TracingContext tracingContext;
+    protected List<TraceListRef> traceListRef = new LinkedList<>();
 
-    public TracingSpan(String operationName, String traceId, int spanId, String parentSpanId, TracingContext tracingContext) {
+    public TracingSpan(String operationName, int spanId, int parentSpanId, TracingContext tracingContext) {
         this.operationName = operationName;
-        this.traceId = traceId;
         this.spanId = spanId;
         this.parentSpanId = parentSpanId;
         this.tracingContext = tracingContext;
     }
 
-    public void finish(TraceList traceList) {
+    public boolean finish(TraceList traceList) {
         endTime = System.currentTimeMillis();
-
+        traceList.archive(this);
+        return true;
     }
 
-    public String getTraceId() {
-        return traceId;
-    }
+
 
     @Override
     public boolean isEntry() {
@@ -58,7 +56,7 @@ public abstract class TracingSpan implements Span {
         return spanId;
     }
 
-    public String getParentSpanId() {
+    public int getParentSpanId() {
         return parentSpanId;
     }
 
@@ -130,5 +128,11 @@ public abstract class TracingSpan implements Span {
 
     public void setEndTime(long endTime) {
         this.endTime = endTime;
+    }
+
+    public void ref(TraceListRef ref) {
+        if (!traceListRef.contains(ref)) {
+            traceListRef.add(ref);
+        }
     }
 }

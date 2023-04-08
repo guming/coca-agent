@@ -6,16 +6,16 @@ public class StackBasedTracingSpan extends TracingSpan {
     protected int stackDepth;
     protected String peer;
 
-    public StackBasedTracingSpan(String operationName, String traceId, int spanId, String parentSpanId,
+    public StackBasedTracingSpan(String operationName, int spanId, int parentSpanId,
                                  TracingContext tracingContext) {
-        super(operationName, traceId, spanId, parentSpanId, tracingContext);
+        super(operationName, spanId, parentSpanId, tracingContext);
         this.stackDepth = 0;
         this.peer = null;
     }
 
-    public StackBasedTracingSpan(String operationName, String traceId, int spanId, String parentSpanId,
+    public StackBasedTracingSpan(String operationName, int spanId, int parentSpanId,
                                  TracingContext tracingContext, String peer) {
-        super(operationName, traceId, spanId, parentSpanId, tracingContext);
+        super(operationName, spanId, parentSpanId, tracingContext);
         this.stackDepth = 0;
         this.peer = peer;
     }
@@ -38,8 +38,11 @@ public class StackBasedTracingSpan extends TracingSpan {
     }
 
     @Override
-    public void finish(TraceList traceList) {
+    public boolean finish(TraceList traceList) {
         this.endTime = System.currentTimeMillis();
         super.finish(traceList);
+        return true;
     }
+
+
 }
