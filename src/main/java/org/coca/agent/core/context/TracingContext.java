@@ -147,4 +147,12 @@ public class TracingContext implements AbstractTracingContext{
     private void finish() {
         System.out.println("finished");
     }
+
+    @Override
+    public void continued(ContextSnapshot snapshot) {
+        TraceListRef traceListRef = new TraceListRef(snapshot);
+        this.traceList.ref(traceListRef);
+        this.activeSpan().ref(traceListRef);
+        this.traceList.relatedGlobalTrace(snapshot.getTraceId());
+    }
 }

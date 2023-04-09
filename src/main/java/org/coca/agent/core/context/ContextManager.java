@@ -91,6 +91,15 @@ public class ContextManager implements BootService {
         }
     }
 
+    public static void continued(ContextSnapshot snapshot) {
+        if (snapshot == null) {
+            throw new IllegalArgumentException("ContextSnapshot can't be null.");
+        }
+        if (!snapshot.isFromCurrent()) {
+            get().continued(snapshot);
+        }
+    }
+
     @Override
     public void prepare() throws Throwable {
 

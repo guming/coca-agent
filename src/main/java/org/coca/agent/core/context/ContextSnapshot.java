@@ -57,4 +57,7 @@ public class ContextSnapshot {
     public void setCorrelationContext(CorrelationContext correlationContext) {
         this.correlationContext = correlationContext;
     }
+    public boolean isFromCurrent() {
+        return traceListId != null && traceListId.equals(ContextManager.capture().getTraceListId());
+    }
 }
