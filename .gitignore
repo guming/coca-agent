@@ -28,4 +28,7 @@ replay_pid*
 .idea/
 
 #Build Files
-.target/
+target/
+
+#OS Files
+.DS_Store
