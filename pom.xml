@@ -18,7 +18,7 @@
         <version.junit>4.13.2</version.junit>
         <version.commons-lang3>3.11</version.commons-lang3>
         <version.commons-codec>1.15</version.commons-codec>
-        <version.byte-buddy>1.12.9</version.byte-buddy>
+        <version.byte-buddy>1.12.10</version.byte-buddy>
     </properties>
 
     <dependencies>

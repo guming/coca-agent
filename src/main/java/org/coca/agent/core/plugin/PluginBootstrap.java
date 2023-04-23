@@ -1,5 +1,9 @@
 package org.coca.agent.core.plugin;
 
-public class PluginBootstrap {
+import java.util.List;
 
+public class PluginBootstrap {
+    public List<AbstractClassEnhancePluginDefine> loadPlugins() {
+        return null;
+    }
 }

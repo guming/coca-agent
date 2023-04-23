@@ -1,4 +1,4 @@
-package org.coca.agent.core.plugin;
+package org.coca.agent.core.plugin.intercept;
 
 import net.bytebuddy.description.method.MethodDescription;
 import net.bytebuddy.matcher.ElementMatcher;

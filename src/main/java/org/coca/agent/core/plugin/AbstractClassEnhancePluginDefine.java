@@ -2,6 +2,9 @@ package org.coca.agent.core.plugin;
 
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
+import org.coca.agent.core.plugin.intercept.ConstructorInterceptPoint;
+import org.coca.agent.core.plugin.intercept.InstanceMethodsInterceptPoint;
+import org.coca.agent.core.plugin.intercept.StaticMethodsInterceptPoint;
 import org.coca.agent.core.plugin.match.ClassMatch;
 
 public abstract class AbstractClassEnhancePluginDefine {
