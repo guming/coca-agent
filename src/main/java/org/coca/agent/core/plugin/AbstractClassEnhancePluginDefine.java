@@ -36,4 +36,7 @@ public abstract class AbstractClassEnhancePluginDefine {
         context.initializationStageCompleted();
         return newClassBuilder;
     }
+    public boolean isBootstrapInstrumentation(){
+        return false;
+    }
 }

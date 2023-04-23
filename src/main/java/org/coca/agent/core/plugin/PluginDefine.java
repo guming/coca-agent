@@ -1,5 +1,8 @@
 package org.coca.agent.core.plugin;
 
+/**
+ * plugin define from SPI
+ */
 public class PluginDefine {
     String name;
     String defineClass;
@@ -22,5 +25,16 @@ public class PluginDefine {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static PluginDefine build(String define) throws IllegalPluginDefineException {
+        String[] pluginDefine = define.split("=");
+        if (pluginDefine.length != 2) {
+            throw new IllegalPluginDefineException(define);
+        }
+
+        String pluginName = pluginDefine[0];
+        String defineClass = pluginDefine[1];
+        return new PluginDefine(pluginName, defineClass);
     }
 }
