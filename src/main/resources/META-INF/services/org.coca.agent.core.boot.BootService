@@ -1,2 +1,4 @@
 # BootService SPI
 org.coca.agent.core.context.ContextManager
+org.coca.agent.core.context.ContextManagerExtendService
+

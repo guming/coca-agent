@@ -1,6 +1,8 @@
 package org.coca.agent.core.context;
 
-public class SpanTag {
+import org.coca.agent.core.context.trace.Span;
+
+public abstract class SpanTag<T> {
     private int id;
     private String key;
 
@@ -8,7 +10,6 @@ public class SpanTag {
         this.id = id;
         this.key = key;
     }
-
     public SpanTag(String key) {
         this(-1, key);
     }
@@ -28,4 +29,5 @@ public class SpanTag {
     public void setKey(String key) {
         this.key = key;
     }
+    protected abstract void set(Span span, T tagValue);
 }

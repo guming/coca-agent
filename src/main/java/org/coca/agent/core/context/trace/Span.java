@@ -11,7 +11,7 @@ public interface Span {
     int getSpanId();
     String getOperationName();
     Span setOperationName(String operationName);
-    Span tag(SpanTag yag, String value);
+    Span tag(SpanTag tag, String value);
     Span tag(String key, String value);
     Span log(Throwable t);
     Span log(long timestamp, Map<String, ?> event);
