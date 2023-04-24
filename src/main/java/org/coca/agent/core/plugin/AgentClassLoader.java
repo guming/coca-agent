@@ -26,7 +26,7 @@ public class AgentClassLoader extends ClassLoader {
         return DEFAULT_LOADER;
     }
 
-    protected AgentClassLoader(ClassLoader parent) {
+    public AgentClassLoader(ClassLoader parent) {
         super(parent);
     }
 

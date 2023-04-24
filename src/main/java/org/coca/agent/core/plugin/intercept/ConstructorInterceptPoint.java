@@ -8,5 +8,5 @@ import net.bytebuddy.matcher.ElementMatcher;
 public interface ConstructorInterceptPoint {
     ElementMatcher<MethodDescription> getConstructorMatcher();
 
-    String getConstructorIntercepyor();
+    String getConstructorInterceptor();
 }
