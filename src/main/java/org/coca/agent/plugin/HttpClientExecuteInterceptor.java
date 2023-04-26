@@ -2,6 +2,8 @@ package org.coca.agent.plugin;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.coca.agent.core.context.CarrierItem;
 import org.coca.agent.core.context.ContextManager;
@@ -44,13 +46,29 @@ public class HttpClientExecuteInterceptor implements InstanceMethodsAroundInterc
     }
 
     @Override
-    public Object after(Object objInst, Method method, Object[] allArguments, Class<?>[] parameterTypes, Object result) {
-        return null;
+    public Object after(Object objInst, Method method, Object[] allArguments, Class<?>[] parameterTypes, Object ret) {
+        if (ret != null) {
+            HttpResponse response = (HttpResponse) ret;
+            StatusLine responseStatusLine = response.getStatusLine();
+            if (responseStatusLine != null) {
+                int statusCode = responseStatusLine.getStatusCode();
+                Span span = ContextManager.activeSpan();
+                if (statusCode >= 400) {
+                    span.errorOccurred();
+                    Tags.STATUS_CODE.set(span, Integer.toString(statusCode));
+                }
+                HttpRequest httpRequest = (HttpRequest) allArguments[1];
+            }
+        }
+
+        ContextManager.stopSpan();
+        return ret;
     }
 
     @Override
     public void handleException(Object objInst, Method method, Object[] allArguments, Class<?>[] parameterTypes, Throwable t) {
-
+        Span activeSpan = ContextManager.activeSpan();
+        activeSpan.log(t);
     }
     private String getRequestURI(String uri) throws MalformedURLException {
         if (isUrl(uri)) {

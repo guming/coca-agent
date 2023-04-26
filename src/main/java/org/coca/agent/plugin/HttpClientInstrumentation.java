@@ -6,7 +6,7 @@ import org.coca.agent.core.plugin.intercept.InstanceMethodsInterceptPoint;
 import org.coca.agent.core.plugin.intercept.StaticMethodsInterceptPoint;
 
 public abstract class HttpClientInstrumentation extends ClassInstanceMethodsEnhancePluginDefine {
-    private static final String INTERCEPT_CLASS = "";
+    private static final String INTERCEPT_CLASS = "org.coca.agent.plugin.HttpClientExecuteInterceptor";
     @Override
     public ConstructorInterceptPoint[] getConstructorsInterceptPoints(){
         return null;

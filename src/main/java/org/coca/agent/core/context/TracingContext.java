@@ -3,7 +3,9 @@ package org.coca.agent.core.context;
 import org.coca.agent.core.context.trace.*;
 import org.coca.agent.core.util.IdGenerator;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class TracingContext implements AbstractTracingContext{
     private TraceList traceList;
@@ -145,7 +147,10 @@ public class TracingContext implements AbstractTracingContext{
         return firstSpan;
     }
     private void finish() {
+        traceList = traceList.finish();
+        ListenerManager.notifyFinish(traceList);
         System.out.println("finished");
+
     }
 
     @Override
@@ -154,5 +159,24 @@ public class TracingContext implements AbstractTracingContext{
         this.traceList.ref(traceListRef);
         this.activeSpan().ref(traceListRef);
         this.traceList.relatedGlobalTrace(snapshot.getTraceId());
+    }
+
+    public static class ListenerManager {
+
+        private static List<TracingContextListener> LISTENERS = new ArrayList<>();
+
+        public static synchronized void add(TracingContextListener tracingContextListener) {
+            LISTENERS.add(tracingContextListener);
+        }
+
+        public static synchronized void remove(TracingContextListener listener) {
+            LISTENERS.remove(listener);
+        }
+
+        public static void notifyFinish(TraceList traceList) {
+            for (TracingContextListener listener : LISTENERS) {
+                listener.afterFinished(traceList);
+            }
+        }
     }
 }

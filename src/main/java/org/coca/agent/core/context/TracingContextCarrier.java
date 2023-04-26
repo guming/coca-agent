@@ -71,7 +71,7 @@ public class TracingContextCarrier implements Serializable {
     }
 
     public CarrierItem items() {
-        return new CarrierItemHead(new CarrierItem("", "", null));
+        return new CarrierItemHead(new CarrierItem("v1", this.serialize(), null));
     }
     public String serialize() {
         return StringUtil.join(

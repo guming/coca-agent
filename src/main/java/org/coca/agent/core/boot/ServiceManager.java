@@ -6,7 +6,7 @@ import java.util.*;
 
 public enum ServiceManager {
     INSTANCE;
-    private Map<Class, BootService> bootedServices = Collections.emptyMap();
+    private Map<Class, BootService> bootedServices = new HashMap<>();
 
     public void boot() {
         loadServices();

@@ -14,6 +14,7 @@ public final class Tags {
     }
 
     public static final StringTag URL = new StringTag(1, "url");
+    public static final StringTag STATUS_CODE = new StringTag(2, "status_code");
     public static final class HTTP {
         public static final StringTag METHOD = new StringTag(10, "http.method");
 

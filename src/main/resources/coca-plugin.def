@@ -1,2 +1,5 @@
 # plugin loader
-DEFAULT=org.coca.agent.core.plugin.
+httpclient-4.x=org.coca.agent.plugin.AbstractHttpClientInstrumentation
+httpclient-4.x=org.coca.agent.plugin.InternalHttpClientInstrumentation
+httpclient-4.x=org.coca.agent.plugin.MinimalHttpClientInstrumentation
+httpclient-4.x=org.coca.agent.plugin.DefaultRequestDirectorInstrumentation

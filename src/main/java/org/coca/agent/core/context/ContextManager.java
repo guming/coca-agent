@@ -15,6 +15,7 @@ public class ContextManager implements BootService {
         TracingContext context = CONTEXT.get();
         if (context == null) {
             context = new TracingContext();
+            CONTEXT.set(context);
         }
         return context;
     }
@@ -47,6 +48,9 @@ public class ContextManager implements BootService {
         return span;
     }
     public static Span createExitSpan(String operationName, TracingContextCarrier carrier, String remotePeer) {
+        if (carrier == null) {
+            throw new IllegalArgumentException("ContextCarrier can't be null.");
+        }
         operationName = StringUtil.cut(operationName, 100);
         AbstractTracingContext context = getOrCreate(operationName);
         Span span = context.createExitSpan(operationName, remotePeer);
