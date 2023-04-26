@@ -27,7 +27,7 @@ public class PluginBootstrap {
         List<AbstractClassEnhancePluginDefine> pluginDefines = new ArrayList<>();
         for (PluginDefine pluginDefine: pluginDefineList) {
             try {
-                AbstractClassEnhancePluginDefine plugin = (AbstractClassEnhancePluginDefine) Class.forName(pluginDefine.getName(),
+                AbstractClassEnhancePluginDefine plugin = (AbstractClassEnhancePluginDefine) Class.forName(pluginDefine.getDefineClass(),
                         true, AgentClassLoader.getDefault()).newInstance();
                 pluginDefines.add(plugin);
             } catch (InstantiationException e) {

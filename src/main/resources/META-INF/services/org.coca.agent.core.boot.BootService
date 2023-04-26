@@ -1,4 +1,5 @@
 # BootService SPI
 org.coca.agent.core.context.ContextManager
 org.coca.agent.core.context.ContextManagerExtendService
+org.coca.agent.core.context.listener.TraceListConsolePrintService
 

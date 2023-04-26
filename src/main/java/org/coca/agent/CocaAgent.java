@@ -13,10 +13,16 @@ import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.SuperCall;
 import net.bytebuddy.matcher.ElementMatchers;
 import net.bytebuddy.utility.JavaModule;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.coca.agent.core.boot.ServiceManager;
 import org.coca.agent.core.plugin.*;
 import org.coca.agent.sample.DemoService;
 import org.coca.agent.plugin.SimpleInstanceInterceptor;
+import org.coca.agent.sample.ExampleHttp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +50,7 @@ public class CocaAgent {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        DemoService demoService = new DemoService();
-        System.out.println(demoService.report("mgu",2 ));
+        ExampleHttp.getClient();
     }
     public static void premain(String arguments, Instrumentation instrumentation) throws IOException {
         if(LOGGER.isDebugEnabled()){

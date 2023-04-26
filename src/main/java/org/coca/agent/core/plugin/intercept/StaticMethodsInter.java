@@ -13,7 +13,7 @@ public class StaticMethodsInter {
     }
     @RuntimeType
     public Object intercept(@Origin Class<?> clazz, @AllArguments Object[] allArguments,
-                            @SuperCall Callable<?> zuper, @Origin Method method) throws ClassNotFoundException {
+                            @SuperCall Callable<?> zuper, @Origin Method method) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         StaticMethodsAroundInterceptor interceptor = InterceptorLoader.load(className, clazz.getClassLoader());
         Object result = null;
         try {

@@ -5,7 +5,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.coca.agent.base.*;
 import org.coca.agent.core.boot.ServiceManager;
 import org.coca.agent.core.context.SpanLogData;
-import org.coca.agent.core.context.trace.Span;
 import org.coca.agent.core.context.trace.TraceList;
 import org.coca.agent.core.context.trace.TracingSpan;
 import org.coca.agent.core.util.TagValuePair;

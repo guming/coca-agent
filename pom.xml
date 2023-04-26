@@ -20,7 +20,7 @@
         <version.commons-lang3>3.11</version.commons-lang3>
         <version.commons-codec>1.15</version.commons-codec>
         <version.byte-buddy>1.12.10</version.byte-buddy>
-        <apache-httpclient.version>4.3</apache-httpclient.version>
+        <apache-httpclient.version>4.5.13</apache-httpclient.version>
         <mockito-core.version>3.5.13</mockito-core.version>
     </properties>
 
@@ -72,7 +72,6 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${apache-httpclient.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>

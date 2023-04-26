@@ -12,7 +12,7 @@ public class InterceptorLoader {
     private static ReentrantLock INSTANCE_LOAD_LOCK = new ReentrantLock();
     private static Map<ClassLoader, ClassLoader> EXTEND_PLUGIN_CLASSLOADERS = new HashMap<ClassLoader, ClassLoader>();
 
-    public static <T> T load(String className, ClassLoader targetClassLoader) throws ClassNotFoundException {
+    public static <T> T load(String className, ClassLoader targetClassLoader) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         if (targetClassLoader == null) {
             targetClassLoader = InterceptorLoader.class.getClassLoader();
         }
@@ -32,7 +32,7 @@ public class InterceptorLoader {
             }finally {
                 INSTANCE_LOAD_LOCK.unlock();
             }
-            inst = Class.forName(className, true, pluginClassLoader);
+            inst = Class.forName(className, true, pluginClassLoader).newInstance();
             if (inst != null) {
                 INSTANCE_CACHE.put(instanceKey, inst);
             }

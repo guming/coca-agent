@@ -135,4 +135,16 @@ public abstract class TracingSpan implements Span {
             traceListRef.add(ref);
         }
     }
+
+    @Override
+    public String toString() {
+        return "TracingSpan{" +
+                "spanId=" + spanId +
+                ", parentSpanId=" + parentSpanId +
+                ", operationName='" + operationName + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", errorOccurred=" + errorOccurred +
+                '}';
+    }
 }

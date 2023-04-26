@@ -33,4 +33,12 @@ public class SpanLogData {
             return new SpanLogData(timestamp, logs);
         }
     }
+
+    @Override
+    public String toString() {
+        return "SpanLogData{" +
+                "timestamp=" + timestamp +
+                ", logs=" + logs +
+                '}';
+    }
 }
